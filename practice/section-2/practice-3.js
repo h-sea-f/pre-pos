@@ -1,54 +1,28 @@
 'use strict';
 
 function countSameElements(collection) {
-  var result = new Array();
-	for(let i = 0;i<collection.length;i++){
-		if(collection[i].length>1){
-			let character = collection[i][0];
-			let num = parseInt(collection[i].match(/\d+/g));
-			if(result.length==0){
-				let obj = new Object();
-				obj.name = character;
-				obj.summary = num;
-				result.push({name:obj.name,summary:obj.summary});
-			}else{
-				let j = 0;
-				for(;j<result.length;j++){
-					if(result[j].name == character){
-						result[j].summary+=num;
-						break;
-					}
+	var collectionA=collection;
+	collectionA.push(" ");
+  var result=[];
+	var i,j;
+	for(i=0;i<collectionA.length;){
+		for(j=i;j<collectionA.length;j++){
+			var count=0;
+			if(collectionA[i].substr(0, 1)!=collectionA[j].substr(0, 1)){
+				for(var k=i;k<j;k++){
+					if(collectionA[k].length==1) count++;
+					if(collectionA[k].length!=1){
+						count+=parseInt(collectionA[k].match(/\d+/g));
+						// console.log(parseInt(collectionA[i].match(/\d+/g)));
+					} 
 				}
-				if(j == result.length){
-					let obj = new Object();
-					obj.name = character;
-					obj.summary = num;
-					result.push({name:obj.name,summary:obj.summary});
-				}
+				result.push({name:collectionA[i].charAt(0),summary:count});
+				break;
 			}
 		}
-		else{
-			if(result.length==0){
-				let obj = new Object();
-				obj.name = collection[i];
-				obj.summary = 1;
-				result.push({name:obj.name,summary:obj.summary});
-			}else{
-				let j = 0;
-				for(;j<result.length;j++){
-					if(result[j].name == collection[i]){
-						result[j].summary++;
-						break;
-					}
-				}
-				if(j == result.length){
-					let obj = new Object();
-					obj.name = collection[i];
-					obj.summary = 1;
-					result.push({name:obj.name,summary:obj.summary});
-				}
-			}
-		}
+		i=j;
+
 	}
+	console.log(result);
 	return result;
 }
